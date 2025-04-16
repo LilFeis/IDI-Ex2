@@ -73,14 +73,14 @@ void MyGLWidget::keyPressEvent(QKeyEvent* event)
   makeCurrent();
   switch (event->key()) {
     case Qt::Key_Up: { 
-      if (posRickX < 5.5f) {
+      if (posRickX < 5.5f && !timer.isActive()) {
         posRickX += 0.25;
         if (dirRick < 0.0f) dirRick = 1.0f; 
       }
       break;
     }
     case Qt::Key_Down: { 
-      if (posRickX > -5.5f) {
+      if (posRickX > -5.5f && !timer.isActive()) {
         posRickX -= 0.25;
         if (dirRick > 0.0f) dirRick = -1.0f; 
       } 
@@ -270,7 +270,7 @@ void MyGLWidget::paintGL () {
   modelTransformTerra ();
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-  if (useVideoCam) viewTransform();
+  if (useVideoCam && timer.isActive()) viewTransform();
 
   glBindVertexArray (0);
 }
